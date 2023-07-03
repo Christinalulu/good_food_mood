@@ -18,14 +18,10 @@
 		<link
 			rel="stylesheet"
 			href="./css/style.css" />
-		
-		
 			<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-         <script src="https://kit.fontawesome.com/3e41f2aa15.js" crossorigin="anonymous"></script>
-
-		<script
-			src="./js/script.js"
-			defer></script>
+			<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+			<script type="module" src="./js/script.js" defer></script>
+			
 		<title>Food Good Mood</title>
 	</head>
 	<body>
@@ -39,31 +35,17 @@
 			</nav>
 			<i class='bx bx-menu' id="menu_icon" ></i>
 		</header>
-		
    <section class="container">
-      <h3 class="title">Organic products</h3>
-      <div class="products_container">
-
-         <div class="inner_cart" data-name="p-1">
-            <img src="./image/imageBurger.jpg" alt="food">
-            <h4>Salad</h4>
-            <p> price 29$</p>
-         </div>
-         
-         <div class="inner_cart" data-name="p-2">
-            <img src="./image/imageBurger.jpg" alt="food">
-            <h4>Beef</h4>
-            <p> price 30$</p>
-         </div>
-
-         <div class="inner_cart" data-name="p-3">
-            <img src="./image/imageBurger.jpg" alt="food">
-            <h4>Chicken</h4>
-            <p> price 100$</p>
-         </div>
-
-      </div>
+		<div class="content">
+			<h2 class="brand">Search for Recipes</h2>
+			<form class="search_bar">
+				<input type="text" placeholder="search your recepies...">
+				<i class='bx bx-search'></i>
+			</form>
+			<div class="search_result">
+			</div>
+	</div>
    </section>
-   
+
 </body>
 </html>
