@@ -5,43 +5,53 @@ menuIcon.addEventListener("click", () => {
 	navBar.classList.toggle("active");
 });
 
-const searchForm = document.querySelector("form");
-const searchResultDiv = document.querySelector(".search_result");
-const conatiner = document.querySelector(".content");
-let searchQuery = "";
-const APP_ID = "8bb43601";
-const APP_KEY = "24d8a66c7aafccf59f81d282dd3e55ee";
+const cardContainer = document.querySelector(".home-container_card");
 
-searchForm.addEventListener("submit", (e) => {
-	e.preventDefault();
-	searchQuery = e.target.querySelector("input").value;
-	console.log(searchQuery);
-	fetchApi();
-});
+async function getImageForHome() {
+	const url =
+		"https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&tags=under_30_minutes";
+	const options = {
+		method: "GET",
+		headers: {
+			"X-RapidAPI-Key": "ad7236b3fdmsh69d7cf6cd804035p196104jsnad5a3a9d2072",
+			"X-RapidAPI-Host": "tasty.p.rapidapi.com",
+		},
+	};
 
-async function fetchApi() {
-	const BASE_URL = `https://api.edamam.com/search?q=${searchQuery}&app_id=${APP_ID}&app_key=${APP_KEY}&to=20`;
-	const response = await fetch(BASE_URL);
-	console.log({ response });
-	const data = await response.json();
-	generateHTML(data.hits);
-	console.log(data);
+	try {
+		const response = await fetch(url, options);
+
+		const responseJSON = await response.json();
+		console.log(response);
+		console.log(responseJSON);
+		console.log(responseJSON.results);
+		generateHomeCardHTML(responseJSON.results);
+	} catch (error) {
+		console.error(error);
+	}
 }
-function generateHTML(results) {
-	let generatedHTML = "";
-	results.map((result) => {
-		generatedHTML += `
-      <div class="card">
-			<img src="${result.recipe.image}" alt="food">
-			<div class="inner_card">
-					<h2 class="title">${result.recipe.label}</h2>
-					<a class="btn_view" href="${result.recipe.url}" target="_blank">View more</a>
+getImageForHome();
+
+function generateHomeCardHTML(results) {
+	let homeCardHTML = "";
+
+	results.map((data) => {
+		// console.log(data);
+
+		homeCardHTML += `
+		<div class="home_card">
+	 		<a href="${data.original_video_url}" >
+				<div class="image">
+					<img src="${data.thumbnail_url}" >
 				</div>
-      <p>Calories: ${result.recipe.calories.toFixed(2)} </p>
-      <p>Cuisine: ${result.recipe.cuisineType} </p>
-      <p>Dish: ${result.recipe.dishType} </p>
-		</div>
-      `;
+				<div class="text">
+					<h3>${data.name}</h3>
+					<p>${data.yields}</p>
+				</div>
+			</a>
+			</div>
+		`;
 	});
-   searchResultDiv.innerHTML = generatedHTML;
+
+	cardContainer.innerHTML += homeCardHTML;
 }
